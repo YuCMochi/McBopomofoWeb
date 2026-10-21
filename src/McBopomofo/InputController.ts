@@ -954,7 +954,7 @@ export class InputController {
     } else if (isAdditionalPageDown) {
       this.candidateController_.goToNextPage();
     } else if (key.name === KeyName.SPACE) {
-      this.candidateController_.goToNextPageButFirstWhenAtEnd();
+      this.candidateController_.goToNextItemButFirstWhenAtEnd();
     } else if (key.name === KeyName.LEFT) {
       if (this.useVerticalCandidates_) {
         this.candidateController_.goToPreviousPage();

@@ -174,6 +174,16 @@ export class CandidateController {
     this.currentSelectedIndex_++;
   }
 
+  /** Moves to the next candidate. If it is already at the last candidate,
+   * moves to the first one. */
+  goToNextItemButFirstWhenAtEnd(): void {
+    if (this.currentSelectedIndex_ >= this.candidates_.length - 1) {
+      this.currentSelectedIndex_ = 0;
+      return;
+    }
+    this.currentSelectedIndex_++;
+  }
+
   /** Moves to the previous page. */
   goToPreviousPage(): void {
     let current = Math.floor(this.currentSelectedIndex_ / this.keyCaps_.length);

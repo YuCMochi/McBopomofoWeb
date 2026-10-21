@@ -317,6 +317,33 @@ describe("CandidateController", () => {
     expect(controller.selectedCandidate.value).toBe("一");
   });
 
+  test("goToNextItemButFirstWhenAtEnd moves one item, crosses pages, then wraps", () => {
+    const itemController = new CandidateController();
+    itemController.update(
+      [
+        new Candidate("", "一", "一"),
+        new Candidate("", "二", "二"),
+        new Candidate("", "三", "三"),
+        new Candidate("", "四", "四"),
+      ],
+      ["1", "2", "3"]
+    );
+
+    itemController.goToNextItemButFirstWhenAtEnd();
+    expect(itemController.selectedCandidate.value).toBe("二");
+    itemController.goToNextItemButFirstWhenAtEnd();
+    expect(itemController.currentPageIndex).toBe(0);
+    expect(itemController.selectedCandidate.value).toBe("三");
+
+    itemController.goToNextItemButFirstWhenAtEnd();
+    expect(itemController.currentPageIndex).toBe(1);
+    expect(itemController.selectedCandidate.value).toBe("四");
+
+    itemController.goToNextItemButFirstWhenAtEnd();
+    expect(itemController.currentPageIndex).toBe(0);
+    expect(itemController.selectedCandidate.value).toBe("一");
+  });
+
   test("goToLast leaves an empty candidate list unchanged", () => {
     const emptyController = new CandidateController();
     emptyController.update([], ["1"]);
