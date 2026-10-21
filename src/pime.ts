@@ -1016,7 +1016,10 @@ module.exports = {
         shouldHandleShift = false;
       }
 
-      const isPressingShiftOnly = key.ascii === "Shift";
+      // Only the right Shift key toggles the mode.
+      const isPressingShiftOnly =
+        key.ascii === "Shift" &&
+        (keyStates[VK_Keys.VK_RSHIFT] & (1 << 7)) !== 0;
 
       // Note: The way we detect if a user is trying to press a single Shift key
       // to toggle Alphabet/Chinese mode, is to check if there is any key other
