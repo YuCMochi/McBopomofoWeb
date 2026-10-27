@@ -3,6 +3,39 @@
 ![Static Badge](https://img.shields.io/badge/platform-web-green)
 ![ChromeOS](https://img.shields.io/badge/platform-chrome_os-yellow) ![Static Badge](https://img.shields.io/badge/platform-windows-blue) [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/openvanilla/McBopomofoWeb) [![codecov](https://codecov.io/github/openvanilla/McBopomofoWeb/branch/main/graph/badge.svg?token=YpF9Z7IPMO)](https://codecov.io/github/openvanilla/McBopomofoWeb)
 
+> ## 個人修改版 (`custom` 分支)
+>
+> 基於官方 [openvanilla/McBopomofoWeb](https://github.com/openvanilla/McBopomofoWeb) 的 2.0.3 release (`271e4e992`)，修改只針對 Windows (PIME) 使用。
+>
+> **與官方的差異**
+>
+> - 選字窗開啟時，空白鍵改為「移到下一個候選字」(類似 macOS)，移過當頁最後一個會自動換頁，到最後一個再按會繞回第一個。官方是整頁翻頁。
+>   - `CandidateController.goToNextItemButFirstWhenAtEnd()`、`InputController.ts` 的空白鍵處理。
+> - 只有**右 Shift** 單獨按下會切換中英文，左 Shift 不會。
+>   - `pime.ts` 的 `filterKeyDown`，檢查 `keyStates[VK_RSHIFT]`。
+>
+> **已知問題**
+>
+> - PIME 把 Ctrl+Space 當作輸入法開關，按下後圖示會變成叉叉 (`isOpened = false`)，此時點圖示或 Shift 都切不回來，且會吃掉其他程式的 Ctrl+Space。這是 PIME 前端行為，這個分支尚未處理。
+> - 「偏好設定」沒反應：PIME 2.0.0-beta3 的安裝目錄沒有 `python\python3\python.exe`，`config_tool.py` 也需要 `tornado`。直接編輯 `%APPDATA%\PIME\mcbopomofo\config.json` 代替。
+>
+> **建置與安裝**
+>
+> ```
+> npm run build:pime
+> ```
+>
+> 安裝需要系統管理員權限：對 `build_pime.bat` 按右鍵「以系統管理員身分執行」，再重啟 PIME Launcher。
+>
+> **同步官方更新**
+>
+> ```
+> git fetch upstream
+> git rebase upstream/main
+> ```
+>
+> remote 設定：`origin` 是自己的 fork，`upstream` 是官方。
+
 本專案使用 JavaScript/TypeScript 與網頁相關技術，實作小麥注音輸入法，並延伸出各種文字服務。
 
 小麥注音是一套自動選字的注音輸入法，提供多種常用鍵盤配置，以及各種方便快速輸入的功能。而衍生出的服務，包括注音與國字的雙向轉換，國字加上注音標示，以及國字與台灣點字的雙向轉換等。
