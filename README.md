@@ -14,11 +14,6 @@
 > - 只有**右 Shift** 單獨按下會切換中英文，左 Shift 不會。
 >   - `pime.ts` 的 `filterKeyDown`，檢查 `keyStates[VK_RSHIFT]`。
 >
-> **已知問題**
->
-> - PIME 把 Ctrl+Space 當作輸入法開關，按下後圖示會變成叉叉 (`isOpened = false`)，此時點圖示或 Shift 都切不回來，且會吃掉其他程式的 Ctrl+Space。這是 PIME 前端行為，這個分支尚未處理。
-> - 「偏好設定」沒反應：PIME 2.0.0-beta3 的安裝目錄沒有 `python\python3\python.exe`，`config_tool.py` 也需要 `tornado`。直接編輯 `%APPDATA%\PIME\mcbopomofo\config.json` 代替。
->
 > **建置與安裝**
 >
 > ```
