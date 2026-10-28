@@ -912,6 +912,11 @@ module.exports = {
       };
 
       if (pimeMcBopomofo.isShiftHold) {
+        // Toggling while composing commits the composing buffer.
+        const state = pimeMcBopomofo.inputController.state;
+        if (state instanceof NotEmpty) {
+          uiState.commitString = state.composingBuffer;
+        }
         pimeMcBopomofo.toggleAlphabetMode();
         // Note: Since we are toggling alphabet mode on key up event, we should
         // update the icons here.
@@ -1007,14 +1012,8 @@ module.exports = {
         return response;
       }
 
-      // Note: We only allow Shift key to toggle Alphabet/Chinese mode when the
-      // state is Empty.
-      let shouldHandleShift =
+      const shouldHandleShift =
         pimeMcBopomofo.settings.shift_key_toggle_alphabet_mode === true;
-      const state = pimeMcBopomofo.inputController.state;
-      if (state instanceof Empty === false) {
-        shouldHandleShift = false;
-      }
 
       // Only the right Shift key toggles the mode.
       const isPressingShiftOnly =
