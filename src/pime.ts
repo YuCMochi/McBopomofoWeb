@@ -20,6 +20,9 @@ import { Empty, Inputting, NotEmpty } from "./McBopomofo/InputState";
 import { InputUI } from "./McBopomofo/InputUI";
 import { KeyFromKeyboardEvent, VK_Keys } from "./pime_keys";
 
+/** Short git commit hash injected by webpack at build time. */
+declare const GIT_VERSION: string;
+
 /**
  * The McBopomofo Settings.
  * @interface
@@ -1194,7 +1197,7 @@ module.exports = {
         },
         {},
         {
-          text: "小麥注音輸入法 for PIME 2.0.3",
+          text: `小麥注音輸入法 for PIME 2.0.3 (YuCMochi修改版 ${GIT_VERSION})`,
         },
       ];
       const response = Object.assign({}, responseTemplate, { return: menu });
