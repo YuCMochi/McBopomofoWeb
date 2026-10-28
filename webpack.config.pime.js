@@ -1,4 +1,17 @@
 const path = require("path");
+const webpack = require("webpack");
+const { execSync } = require("child_process");
+
+// Short commit hash of HEAD, with "+" when there are uncommitted changes.
+const gitVersion = (() => {
+  try {
+    const hash = execSync("git rev-parse --short HEAD").toString().trim();
+    const dirty = execSync("git status --porcelain").toString().trim();
+    return dirty ? hash + "+" : hash;
+  } catch (e) {
+    return "unknown";
+  }
+})();
 
 module.exports = {
   target: "node",
@@ -18,6 +31,9 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new webpack.DefinePlugin({ GIT_VERSION: JSON.stringify(gitVersion) }),
+  ],
   resolve: {
     extensions: [".ts", ".js"],
   },
